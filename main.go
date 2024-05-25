@@ -72,7 +72,13 @@ func main() {
 	}
 	elapsed := time.Since(start)
 
-	fmt.Printf("Extracted Prices: %+v\n", priceData)
+	priceDataJsonForPrinting, err := json.MarshalIndent(priceData, "", "  ")
+	if err != nil {
+		log.Fatalf("Error creating Gemini client: %v", err)
+	}
+
+	fmt.Printf("Extracted Prices: %s\n", priceDataJsonForPrinting)
+
 	fmt.Printf("\nTokens generated: %d\n", resp.UsageMetadata.CandidatesTokenCount)
 	fmt.Printf("Input token count: %d\n", resp.UsageMetadata.PromptTokenCount)
 	fmt.Printf("Output tokens per Second: %.2f\n", float64(resp.UsageMetadata.CandidatesTokenCount)/elapsed.Seconds())
