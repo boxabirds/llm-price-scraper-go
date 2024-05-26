@@ -60,6 +60,8 @@ func main() {
 	}
 
 	client, model := newGeminiClientModel(ctx, *scraperModel)
+	model.SetTemperature(0.0)
+
 	defer client.Close()
 	if err != nil {
 		log.Fatalf("Error creating Gemini client: %v", err)
